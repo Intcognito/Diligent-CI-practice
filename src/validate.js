@@ -10,3 +10,13 @@ export function validateAddParams(params) {
   }
   return params;
 }
+
+export function validateId(id) {
+  if(typeof id !== 'number') {
+    throw new AppError('The id must be a number.')
+  }
+  if(id < 0) {
+    throw new AppError('The id must be a non-negative number.')
+  }
+  return id;
+}
