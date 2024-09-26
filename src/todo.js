@@ -32,4 +32,10 @@ export function add(store, params) {
 	return newTodo;
 }
 
-export function findTodoByTitle(store, title) {}
+export function findTodoByTitle(store, title) {
+	const todos = store.get();
+	// return todos;
+	return todos.filter((todo) => {
+		return todo.title.includes(title);
+	});
+}
