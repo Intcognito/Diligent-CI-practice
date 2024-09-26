@@ -34,7 +34,7 @@ export function add(store, params) {
 
 export function findTodoByTitle(store, title) {
 	const todos = store.get();
-	// return todos;
+	// returns the todo the problem is that it doesnt return it if its separated with "-" orwith spaces
 	return todos.filter((todo) => {
 		return todo.title.includes(title);
 	});
