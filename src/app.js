@@ -20,7 +20,7 @@ export function createApp(todoStore, args) {
       display(['New Todo added:', format(added)])
       break;
     case 'complete':
-      const validatedId = validateId(id);
+      const validatedId = validateId(params);
       const completed = complete(validatedId);
       display(['Todo completed:', format(completed)])
       break;
