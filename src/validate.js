@@ -26,5 +26,5 @@ export function validateFindByTitleParams(params) {
 			"The title has to be a string or atleast 3 character long."
 		);
 	}
-	return params;
+	return title;
 }

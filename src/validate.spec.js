@@ -55,7 +55,7 @@ describe("validateAddParams", () => {
 describe("findvalidateFindByTitleParams", () => {
 	//true
 	it("should be successfull when valid title was given", () => {
-		const param = "Todo1";
+		const param = ["Todo1"];
 		const expected = "Todo1";
 
 		const current = validateFindByTitleParams(param);
@@ -84,9 +84,9 @@ describe("findvalidateFindByTitleParams", () => {
 
 	//parameter is not a string
 	it("should throw an error if the title is not a string", () => {
-		const param = [7];
+		const params = [7];
 		expect(() =>
-			validateFindByTitleParams(param).toThrow(
+			validateFindByTitleParams(params).toThrow(
 				"The title has to be a string or atleast 3 character long."
 			)
 		);
@@ -94,9 +94,9 @@ describe("findvalidateFindByTitleParams", () => {
 
 	//parameter is less then 3 character
 	it("should throw an error if the title is less than 3 character", () => {
-		const param = ["To"];
+		const params = ["To"];
 		expect(() =>
-			validateFindByTitleParams(param).toThrow(
+			validateFindByTitleParams(params).toThrow(
 				"The title has to be a string or atleast 3 character long."
 			)
 		);
