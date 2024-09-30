@@ -14,7 +14,7 @@ export function validateAddParams(params) {
 export function validateFindByTitleParams(params) {
 	// checks if the user forgot the parameter or not
 	if (params.length !== 1) {
-		throw new AppError("You forgot the title.");
+		throw new AppError("You have to give exactly one parameter as a title!");
 	}
 
 	const [title] = params;

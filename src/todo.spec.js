@@ -138,6 +138,6 @@ describe("find-by-title", () => {
 		]);
 		const expected = [{ id: 2, title: "Todo 2", done: false }];
 		const current = findTodoByTitle(mockStore, "todo");
-		expected(current).toEqual(expected);
+		expect(current).toEqual(expected);
 	});
 });
