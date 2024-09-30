@@ -12,7 +12,15 @@ export function validateAddParams(params) {
 }
 
 export function validateFindByTitleParams(params) {
+	// checks if the user forgot the parameter or not
+	if (params.length !== 1) {
+		throw new AppError("You forgot the title.");
+	}
+
 	const [title] = params;
+
+	//checks if the given title is not a string and if its less than 3 characters
+	//if one of the checks are true then it throws an AppError
 	if (typeof title !== "string" || title?.length < 3) {
 		throw new AppError(
 			"The title has to be a string or atleast 3 character long."

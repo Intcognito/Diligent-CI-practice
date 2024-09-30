@@ -17,12 +17,17 @@ export function createApp(todoStore, args) {
 			display(["New Todo added:", format(added)]);
 			break;
 		case "find-by-title":
+			//title parameter checking
 			const validatedTitle = validateFindByTitleParams(params);
+			//Searching for the todo with the given title
 			const foundTodos = findTodoByTitle(todoStore, validatedTitle);
+			//checking if the result array has items or not
+			// if it doesnt it displays that there is no todos with the given parameter
 			if (foundTodos.length == 0) {
 				display(["No todos found with this title!"]);
 				break;
 			}
+			// if it has then displays it/them
 			display(["Found todos:", ...formatList(foundTodos)]);
 			break;
 		default:
