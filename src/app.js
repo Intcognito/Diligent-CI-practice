@@ -19,13 +19,11 @@ export function createApp(todoStore, args) {
 		case "find-by-title":
 			const validatedTitle = validateFindByTitleParams(params);
 			const foundTodos = findTodoByTitle(todoStore, validatedTitle);
-			console.log(foundTodos);
-			// if(foundTodos){
-			//   display([''])
-			// }
-			// else{
-			//   display([''])
-			// }
+			if (foundTodos.length == 0) {
+				display(["No todos found with this title!"]);
+				break;
+			}
+			display(["Found todos:", ...formatList(foundTodos)]);
 			break;
 		default:
 			throw new AppError(`Unknown command: ${command}`);

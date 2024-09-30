@@ -14,7 +14,9 @@ export function validateAddParams(params) {
 export function validateFindByTitleParams(params) {
 	const [title] = params;
 	if (typeof title !== "string" || title?.length < 3) {
-		throw new AppError("The title has to be atleast 3 character long.");
+		throw new AppError(
+			"The title has to be a string or atleast 3 character long."
+		);
 	}
 	return params;
 }
