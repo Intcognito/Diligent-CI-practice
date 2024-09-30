@@ -35,6 +35,7 @@ export function add(store, params) {
 export function findTodoByTitle(store, title) {
 	const todos = store.get();
 	const re = new RegExp(title, "i");
+
 	// creates a new array with the todos which titles are matching with the regular expression (the given parameter with case insensitive format)
 	const filteredTodos = todos.filter((todo) => {
 		if (todo.title.match(re)) {

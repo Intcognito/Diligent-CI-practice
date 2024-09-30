@@ -1,5 +1,5 @@
 import { jest } from "@jest/globals";
-import { add, format, formatList, list } from "./todo.js";
+import { add, format, formatList, list, findTodoByTitle } from "./todo.js";
 
 function createMockStore(data) {
 	return {
@@ -128,4 +128,14 @@ describe("add", () => {
 	});
 });
 
-describe("find-by-title", () => {});
+describe("find-by-title", () => {
+	it("should return the todos which titles are matching or contains the given parameter", () => {
+		const mockStore = createMockStore([
+			{ id: 1, title: "Todo 1", done: true },
+			{ id: 2, title: "Todo 2", done: false },
+		]);
+		const expected = { id: 2, title: "Todo 2", done: false };
+		const current = findTodoByTitle(mockStore, "eat");
+		expected(current).toEqual(expected);
+	});
+});
