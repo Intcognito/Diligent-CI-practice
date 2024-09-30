@@ -133,9 +133,11 @@ describe("find-by-title", () => {
 		const mockStore = createMockStore([
 			{ id: 1, title: "Todo 1", done: true },
 			{ id: 2, title: "Todo 2", done: false },
+			{ id: 3, title: "Todo 2 something", done: false },
+			{ id: 4, title: "something", done: false },
 		]);
-		const expected = { id: 2, title: "Todo 2", done: false };
-		const current = findTodoByTitle(mockStore, "eat");
+		const expected = [{ id: 2, title: "Todo 2", done: false }];
+		const current = findTodoByTitle(mockStore, "todo");
 		expected(current).toEqual(expected);
 	});
 });
