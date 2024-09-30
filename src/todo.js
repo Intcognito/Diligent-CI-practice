@@ -1,5 +1,5 @@
 export function format(todo) {
-  return `${todo.id} - [${todo.done ? 'x': ' '}] ${todo.title}`;
+  return `${todo.id} - [${todo.done ? 'x' : ' '}] ${todo.title}`;
 }
 
 export function formatList(todos) {
@@ -16,7 +16,7 @@ function nextId(todos) {
 }
 
 export function list(store) {
-  return store.get(); 
+  return store.get();
 }
 
 export function add(store, params) {
@@ -30,4 +30,10 @@ export function add(store, params) {
   const toStore = [...todos, newTodo]
   store.set(toStore)
   return newTodo;
+}
+
+export function findById(store, id) {
+  const todos = store.get();
+  const todo = todos.find(todo => todo.id === id);
+  return todo;
 }
