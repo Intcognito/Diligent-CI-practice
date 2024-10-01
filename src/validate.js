@@ -23,7 +23,7 @@ export function validateFindByIdParams(params) {
 	return parseInt(params, 10);
 }
 
-export function validatedEditTitleParams(params) {
+export function validateEditTitleParams(params) {
 	if (params.length !== 2) {
 		throw new AppError("You must provide an ID and a new title as parameters");
 	}

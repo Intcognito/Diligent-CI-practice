@@ -1,10 +1,10 @@
-import { list, formatList, format, add, findById } from "./todo.js";
+import { list, formatList, format, add, findById, editTitle } from "./todo.js";
 import { display } from "./display.js";
 import { AppError } from "./app-error.js";
 import {
 	validateAddParams,
 	validateFindByIdParams,
-	validatedEditTitleParams,
+	validateEditTitleParams,
 } from "./validate.js";
 
 export function createApp(todoStore, args) {
@@ -30,8 +30,14 @@ export function createApp(todoStore, args) {
 			display(["Todo by Id:", format(todoById)]);
 			break;
 		case "edit-title":
-			const validatedParams = validatedEditTitleParams(params);
-			console.log(validatedParams);
+			const validatedEditTitleParams = validateEditTitleParams(params);
+
+			editTitle(
+				todoStore,
+				validatedEditTitleParams[0],
+				validatedEditTitleParams[1]
+			);
+			break;
 		default:
 			throw new AppError(`Unknown command: ${command}`);
 	}
