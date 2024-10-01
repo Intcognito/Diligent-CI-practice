@@ -1,57 +1,53 @@
 import { jest } from '@jest/globals';
-import { add, findById, format, formatList, list, complete } from './todo.js';
+import { add, findById, format, formatList, list, complete, findTodoByTitle } from './todo.js';
 
 function createMockStore(data) {
-  return {
-    get: jest.fn(() => data),
-    set: jest.fn()
-  }
+	return {
+		get: jest.fn(() => data),
+		set: jest.fn(),
+	};
 }
 
-describe('format', () => {
-  it('should format a not done todo', () => {
-    const todo = { title: 'todo title', id: 1, done: false };
-    const expected = '1 - [ ] todo title';
+describe("format", () => {
+	it("should format a not done todo", () => {
+		const todo = { title: "todo title", id: 1, done: false };
+		const expected = "1 - [ ] todo title";
 
-    const current = format(todo)
+		const current = format(todo);
 
-    expect(current).toStrictEqual(expected)
-  })
+		expect(current).toStrictEqual(expected);
+	});
 
-  it('should format a done todo', () => {
-    const todo = { title: 'todo title', id: 1, done: true };
-    const expected = '1 - [x] todo title';
+	it("should format a done todo", () => {
+		const todo = { title: "todo title", id: 1, done: true };
+		const expected = "1 - [x] todo title";
 
-    const current = format(todo)
+		const current = format(todo);
 
-    expect(current).toStrictEqual(expected)
-  });
+		expect(current).toStrictEqual(expected);
+	});
 });
 
-describe('formatList', () => {
-  it('should format a list of todos', () => {
-    const todos = [
-      { title: 'todo title', id: 1, done: true },
-      { title: 'todo title 2', id: 2, done: false }
-    ];
-    const expected = [
-      '1 - [x] todo title',
-      '2 - [ ] todo title 2'
-    ];
+describe("formatList", () => {
+	it("should format a list of todos", () => {
+		const todos = [
+			{ title: "todo title", id: 1, done: true },
+			{ title: "todo title 2", id: 2, done: false },
+		];
+		const expected = ["1 - [x] todo title", "2 - [ ] todo title 2"];
 
-    const current = formatList(todos)
+		const current = formatList(todos);
 
-    expect(current).toStrictEqual(expected)
-  }),
+		expect(current).toStrictEqual(expected);
+	});
+		it("should return an empty list, if an empty list is given", () => {
+			const todos = [];
+			const expected = [];
 
-    it('should return an empty list, if an empty list is given', () => {
-      const todos = [];
-      const expected = [];
+			const current = formatList(todos);
 
-      const current = formatList(todos)
-
-      expect(current).toStrictEqual(expected)
-    });
+			expect(current).toStrictEqual(expected);
+		});
 });
 
 describe('list', () => {
@@ -161,5 +157,24 @@ describe('complete', () => {
     const actual = complete(mockTodos, id);
 
     expect(actual).toStrictEqual(expected);
+  });
+  
+  describe("find-by-title", () => {
+	it("should return the todos which titles are matching or contains the given parameter", () => {
+		const mockStore = createMockStore([
+			{ id: 1, title: "Todo 1", done: true },
+			{ id: 2, title: "Todo 2", done: false },
+			{ id: 3, title: "Todo 2 something", done: false },
+			{ id: 4, title: "something", done: false },
+		]);
+
+		const current = findTodoByTitle(mockStore, "todo");
+		const expected = [
+			{ id: 1, title: "Todo 1", done: true },
+			{ id: 2, title: "Todo 2", done: false },
+			{ id: 3, title: "Todo 2 something", done: false },
+		];
+		expect(current).toStrictEqual(expected);
+	});
   });
 });

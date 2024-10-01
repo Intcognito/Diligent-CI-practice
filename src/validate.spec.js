@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { validateAddParams, validateFindByIdParams, validateId } from "./validate";
+import { validateAddParams, validateFindByIdParams, validateId, validateFindByTitleParams } from "./validate";
 
 function createMockStore(data) {
   return {
@@ -150,4 +150,55 @@ describe('validateId', () => {
   it('should throw an error if no ID is provided', () => {
     expect(() => validateId(mockTodos, id).toThrow('Please provide exactly one ID!'));
   });
+});
+
+describe("findvalidateFindByTitleParams", () => {
+	//true
+	it("should be successfull when valid title was given", () => {
+		const param = ["Todo1"];
+		const expected = "Todo1";
+
+		const current = validateFindByTitleParams(param);
+		expect(current).toStrictEqual(expected);
+	});
+
+	//0 parameter
+	it("should throw an Error if the parameter is less or more than 1", () => {
+		const param = [""];
+		expect(() =>
+			validateFindByTitleParams(param).toThrow(
+				"You have to give exactly one parameter as a title!"
+			)
+		);
+	});
+
+	//more than 1 parameter
+	it("should throw an Error if the parameter is less or more than 1", () => {
+		const params = ["todo1", "todo2"];
+		expect(() =>
+			validateFindByTitleParams(params).toThrow(
+				"You have to give exactly one parameter as a title!"
+			)
+		);
+	});
+
+	//parameter is not a string
+	it("should throw an error if the title is not a string", () => {
+		const params = [7];
+		expect(() =>
+			validateFindByTitleParams(params).toThrow(
+				"The title has to be a string or atleast 3 character long."
+			)
+		);
+	});
+
+	//parameter is less then 3 character
+	it("should throw an error if the title is less than 3 character", () => {
+		const params = ["To"];
+		expect(() =>
+			validateFindByTitleParams(params).toThrow(
+				"The title has to be a string or atleast 3 character long."
+			)
+		);
+	});
 });
