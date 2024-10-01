@@ -56,7 +56,7 @@ export function validateFindByTitleParams(params) {
 	//if one of the checks are true then it throws an AppError
 	if (typeof title !== "string" || title?.length < 3) {
 		throw new AppError(
-			"The title has to be a string or atleast 3 character long."
+			"The title has to be a string and atleast 3 character long."
 		);
 	}
 	return title;
