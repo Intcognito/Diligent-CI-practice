@@ -32,6 +32,20 @@ export function add(store, params) {
   return newTodo;
 }
 
+export function complete(store, id) {
+  const originalList = store.get();
+  const taskToComplete = originalList.filter(task => task.id === id)[0];
+  const completedTask = {...taskToComplete, done: true};
+
+  const updatedList = originalList.map(task => {
+    if (task.id === id) return completedTask;
+    return task;
+  });
+  store.set(updatedList);
+
+  return completedTask;
+}
+
 export function findById(store, id) {
   const todos = store.get();
   const todo = todos.find(todo => todo.id === id);
