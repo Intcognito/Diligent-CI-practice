@@ -23,3 +23,15 @@ export function validateId(id) {
 
   return parsedId;
 }
+
+export function validateFindByIdParams(params) {
+  if (params.length !== 1) {
+    throw new AppError('You must provide exactly one ID.');
+  }
+
+  const [id] = params;
+  if (isNaN(id) || id <= 0) {
+    throw new AppError('The ID must be a numeric value greater than 0.');
+  }
+  return parseInt(params, 10);
+}
