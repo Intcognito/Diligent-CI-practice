@@ -39,7 +39,7 @@ describe("formatList", () => {
 		const current = formatList(todos);
 
 		expect(current).toStrictEqual(expected);
-	}),
+	});
 		it("should return an empty list, if an empty list is given", () => {
 			const todos = [];
 			const expected = [];
