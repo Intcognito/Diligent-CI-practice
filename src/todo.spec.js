@@ -176,4 +176,5 @@ describe('complete', () => {
 		];
 		expect(current).toStrictEqual(expected);
 	});
+  });
 });
