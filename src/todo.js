@@ -41,11 +41,22 @@ export function findById(store, id) {
 }
 
 export function editTitle(store, id, newTitle) {
+	//searching for the todo by id with the findById function
 	const foundTodo = findById(store, id);
+
+	/**
+	 * if it didnt found a todo throws an Error
+	 * {Object | undefined} foundTodo - the found todo
+	 */
 	if (!foundTodo) {
 		throw new AppError(`Todo with ID ${id} not found.`);
 	}
 
+	/**
+	 * creating the updated todos list and saving the edited todo
+	 * {Object} updatedTodo - stores the edited todo
+	 * {Array} updatedTodos - creates and stores the new edited todos array
+	 */
 	let updatedTodo = {};
 	const updatedTodos = store.get().map((todo) => {
 		if (todo.id == id) {

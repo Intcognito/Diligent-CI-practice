@@ -30,12 +30,22 @@ export function createApp(todoStore, args) {
 			display(["Todo by Id:", format(todoById)]);
 			break;
 		case "edit-title":
+			//validating the parameters
 			const validatedEditTitleParams = validateEditTitleParams(params);
+
+			/**
+			 * saving the returned edited todo
+			 * @param {number} validatedEditTitleParams[0] - the id as an integer
+			 * @param {string} validatedEditTitleParams[1] - the new title
+			 * @returns {Object} - the edited todo
+			 */
 			const updatedTodo = editTitle(
 				todoStore,
 				validatedEditTitleParams[0],
 				validatedEditTitleParams[1]
 			);
+
+			//displaying the edited todo
 			display(["The updated todo: ", format(updatedTodo)]);
 			break;
 		default:
