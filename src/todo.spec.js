@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { add, format, formatList, list } from './todo.js';
+import { add, findById, format, formatList, list, complete } from './todo.js';
 
 function createMockStore(data) {
   return {
@@ -99,7 +99,7 @@ describe('add', () => {
 
   it('should append a new todo to the existing items', () => {
     const params = ['New Todo'];
-    const stored = [{id: 1, title: 'Todo 1', done: true}];
+    const stored = [{ id: 1, title: 'Todo 1', done: true }];
     const mockStore = createMockStore(stored);
     const expected = {
       id: 2,
@@ -117,8 +117,8 @@ describe('add', () => {
   it('should calculate the id by max id + 1, missing ids in a sequence', () => {
     const params = ['New Todo'];
     const stored = [
-      {id: 2, title: 'Todo 1', done: true},
-      {id: 4, title: 'Todo 1', done: true},
+      { id: 2, title: 'Todo 1', done: true },
+      { id: 4, title: 'Todo 1', done: true },
     ];
     const mockStore = createMockStore(stored);
     const expected = {
@@ -135,6 +135,31 @@ describe('add', () => {
   });
 });
 
+describe('find-by-id', () => {
+  it('should return the todo item a valid ID is provided', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: "Todo 1", done: false },
+      { id: 2, title: "Todo 2", done: true }
+    ]);
+    const id = 1;
+    const expected = { id: 1, title: 'Todo 1', done: false };
+    const current = findById(mockStore, id);
+    expect(current).toStrictEqual(expected);
 
+  });
+})
 
+describe('complete', () => {
+  it('should complete the todo if ID is found', () => {
+    const mockTodos = createMockStore([
+      { id: 1, title: "First task", done: false },
+      { id: 2, title: "Second task", done: false }
+    ]);
+    const id = 2;
 
+    const expected = {id:2, title:"Second task", done: true};
+    const actual = complete(mockTodos, id);
+
+    expect(actual).toStrictEqual(expected);
+  });
+});
