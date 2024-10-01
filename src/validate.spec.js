@@ -1,4 +1,8 @@
-import { validateAddParams, validateFindByIdParams } from "./validate";
+import {
+	validateAddParams,
+	validateFindByIdParams,
+	validateEditTitleParams,
+} from "./validate";
 
 describe("validateAddParams", () => {
 	it("should pass and return with the original params with single string", () => {
@@ -96,5 +100,72 @@ describe("validateFindByIdParams", () => {
 });
 
 describe("validateEditTitleParams", () => {
-	it("", () => {});
+	it("should pass and return the params if id and newTitle is valid", () => {
+		const params = ["1", "Something todo"];
+		const expected = [1, "Something todo"];
+
+		const current = validateEditTitleParams(params);
+
+		expect(current).toStrictEqual(expected);
+	});
+
+	it("should throw an error if more than 2 parameter is provided", () => {
+		const params = ["1", "Something todo", "something", "more"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"You must provide an ID and a new title as parameters"
+			);
+		});
+	});
+
+	it("should throw an error if less than 2 parameter is provided", () => {
+		const params = ["1"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"You must provide an ID and a new title as parameters"
+			);
+		});
+	});
+
+	it("should throw an error if id is not a number", () => {
+		const params = ["notNumber", "Something todo"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The ID must be a numeric value greater than 0"
+			);
+		});
+	});
+
+	it("should throw an error if id is less or equal 0", () => {
+		const params = ["0", "Something todo"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The ID must be a numeric value greater than 0"
+			);
+		});
+	});
+
+	it("should throw an error if newTitle is not a string", () => {
+		const params = ["1", "12"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The new title must be a string and has to be at least 1 character long"
+			);
+		});
+	});
+
+	it("should throw an error if newTitle's length less than 1", () => {
+		const params = ["notNumber", ""];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The new title must be a string and has to be at least 1 character long"
+			);
+		});
+	});
 });
