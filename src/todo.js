@@ -1,5 +1,5 @@
 export function format(todo) {
-	return `${todo.id} - [${todo.done ? "x" : " "}] ${todo.title}`;
+  return `${todo.id} - [${todo.done ? 'x' : ' '}] ${todo.title}`;
 }
 
 export function formatList(todos) {
@@ -43,4 +43,25 @@ export function findTodoByTitle(store, title) {
 		}
 	});
 	return filteredTodos;
+}
+
+
+export function complete(store, id) {
+  const originalList = store.get();
+  const taskToComplete = originalList.filter(task => task.id === id)[0];
+  const completedTask = {...taskToComplete, done: true};
+
+  const updatedList = originalList.map(task => {
+    if (task.id === id) return completedTask;
+    return task;
+  });
+  store.set(updatedList);
+
+  return completedTask;
+}
+
+export function findById(store, id) {
+  const todos = store.get();
+  const todo = todos.find(todo => todo.id === id);
+  return todo;
 }
