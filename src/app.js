@@ -31,7 +31,7 @@ export function createApp(todoStore, args) {
 			break;
 		case "edit-title":
 			const validatedParams = validatedEditTitleParams(params);
-			console.log(validateAddParams);
+			console.log(validatedParams);
 		default:
 			throw new AppError(`Unknown command: ${command}`);
 	}

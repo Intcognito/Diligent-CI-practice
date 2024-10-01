@@ -39,5 +39,5 @@ export function validatedEditTitleParams(params) {
 		);
 	}
 
-	return parseInt(id), newTitle;
+	return [parseInt(id), newTitle];
 }
