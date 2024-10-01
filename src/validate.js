@@ -11,14 +11,22 @@ export function validateAddParams(params) {
   return params;
 }
 
-export function validateId(id) {
+export function validateId(todoStore, id) {
   const parsedId = parseInt(id[0]);
+  const todos = todoStore.get();
+  const todo = todos.find(task => task.id === parsedId);
 
+  if (id.length !== 1) {
+    throw new AppError('Please provide exactly one ID!');
+  }
   if (typeof parsedId !== 'number') {
-    throw new AppError('The id must be a number.')
+    throw new AppError('The id must be a number.');
   }
   if (parsedId <= 0) {
-    throw new AppError('The id must be a number greater than zero.')
+    throw new AppError('The id must be a number greater than zero.');
+  }
+  if (!todo) {
+    throw new AppError('Todo not found by ID.');
   }
 
   return parsedId;
