@@ -54,7 +54,7 @@ export function editTitle(store, id, newTitle) {
 		}
 		return todo;
 	});
-	store.set(updatedTodos);
 
+	store.set(updatedTodos);
 	return updatedTodo;
 }
