@@ -31,12 +31,12 @@ export function createApp(todoStore, args) {
 			break;
 		case "edit-title":
 			const validatedEditTitleParams = validateEditTitleParams(params);
-
-			editTitle(
+			const updatedTodo = editTitle(
 				todoStore,
 				validatedEditTitleParams[0],
 				validatedEditTitleParams[1]
 			);
+			display(["The updated todo: ", format(updatedTodo)]);
 			break;
 		default:
 			throw new AppError(`Unknown command: ${command}`);
