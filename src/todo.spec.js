@@ -170,7 +170,7 @@ describe("edit-title", () => {
 		editTitle(mockStore, id, newTitle);
 		expect(mockStore.set.mock.lastCall).toStrictEqual([expected]);
 	});
-  
+});
 describe('complete', () => {
   it('should complete the todo if ID is found', () => {
     const mockTodos = createMockStore([
