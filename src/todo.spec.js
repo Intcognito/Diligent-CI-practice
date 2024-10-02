@@ -178,38 +178,3 @@ describe('complete', () => {
 	});
   });
 });
-
-// I am commenting this section of the test to check if jest can run without this part
-/*
-describe("edit-title", () => {
-    it("should return the edited todo", () => {
-        const mockStore = createMockStore([
-            { id: 1, title: "Todo 1", done: false },
-            { id: 2, title: "Todo 2", done: true },
-        ]);
-
-        const id = 1;
-        const newTitle = "Something Todo";
-        const expected = { id: 1, title: "Something Todo", done: false };
-        const current = editTitle(mockStore, id, newTitle);
-        expect(current).toStrictEqual(expected);
-    });
-
-    it("should edit the todos file", () => {
-        const stored = [
-            { id: 1, title: "Todo 1", done: false },
-            { id: 2, title: "Todo 2", done: true },
-        ];
-        const mockStore = createMockStore(stored);
-
-        const id = 1;
-        const newTitle = "Something Todo";
-        const expected = [
-            { id: 1, title: "Something Todo", done: false },
-            { id: 2, title: "Todo 2", done: true },
-        ];
-        editTitle(mockStore, id, newTitle);
-        expect(mockStore.set.mock.lastCall).toStrictEqual([expected]);
-    }); 
-});
-*/
