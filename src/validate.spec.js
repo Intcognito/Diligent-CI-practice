@@ -288,4 +288,3 @@ describe("validateEditTitleParams", () => {
       .toThrow('The title must be a non zero length string.');
   })
 })
-})
