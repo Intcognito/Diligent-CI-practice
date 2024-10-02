@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { validateAddParams, validateFindByIdParams, validateId, validateFindByTitleParams } from "./validate";
+import { validateAddParams, validateFindByIdParams, validateId, validateFindByTitleParams, validateEditTitleParams } from "./validate";
 
 function createMockStore(data) {
   return {
@@ -8,55 +8,57 @@ function createMockStore(data) {
   }
 }
 
-describe('validateAddParams', () => {
-  it('should pass and return with the original params with single string', () => {
-    const params = ['Todo'];
-    const expected = ['Todo'];
+describe("validateAddParams", () => {
+	it("should pass and return with the original params with single string", () => {
+		const params = ["Todo"];
+		const expected = ["Todo"];
 
-    const current = validateAddParams(params);
+		const current = validateAddParams(params);
 
-    expect(current).toStrictEqual(expected);
-  })
+		expect(current).toStrictEqual(expected);
+	});
 
-  it('should pass and return with the original params with single string separated with spaces', () => {
-    const params = ['Todo Item'];
-    const expected = ['Todo Item'];
+	it("should pass and return with the original params with single string separated with spaces", () => {
+		const params = ["Todo Item"];
+		const expected = ["Todo Item"];
 
-    const current = validateAddParams(params);
+		const current = validateAddParams(params);
 
-    expect(current).toStrictEqual(expected);
-  })
+		expect(current).toStrictEqual(expected);
+	});
 
-  it('should throw when multiple strings given', () => {
-    const params = ['Todo Item', 'Other string'];
+	it("should throw when multiple strings given", () => {
+		const params = ["Todo Item", "Other string"];
 
-    expect(() => validateAddParams(params))
-      .toThrow('Give a title as the only parameter in parenthesis.');
-  })
+		expect(() => validateAddParams(params)).toThrow(
+			"Give a title as the only parameter in parenthesis."
+		);
+	});
 
-  it('should throw when no params given.', () => {
-    const params = [];
+	it("should throw when no params given.", () => {
+		const params = [];
 
-    expect(() => validateAddParams(params))
-      .toThrow('Give a title as the only parameter in parenthesis.');
-  })
+		expect(() => validateAddParams(params)).toThrow(
+			"Give a title as the only parameter in parenthesis."
+		);
+	});
 
-  it('should throw when the param is not a string', () => {
-    const params = [5];
+	it("should throw when the param is not a string", () => {
+		const params = [5];
 
-    expect(() => validateAddParams(params))
-      .toThrow('The title must be a non zero length string.');
-  })
+		expect(() => validateAddParams(params)).toThrow(
+			"The title must be a non zero length string."
+		);
+	});
 
-  it('should throw when the param is a zero length string', () => {
-    const params = [''];
+	it("should throw when the param is a zero length string", () => {
+		const params = [""];
 
-    expect(() => validateAddParams(params))
-      .toThrow('The title must be a non zero length string.');
-  })
-
-
-})
+		expect(() => validateAddParams(params)).toThrow(
+			"The title must be a non zero length string."
+		);
+	});
+});
 
 describe('validateFindByIdParams', () => {
   it('should pass and return the parsed numeric value when valid ID is provided', () => {
@@ -202,3 +204,87 @@ describe("findvalidateFindByTitleParams", () => {
 		);
 	});
 });
+  
+describe("validateEditTitleParams", () => {
+	it("should pass and return the params if id and newTitle is valid", () => {
+		const params = ["1", "Something todo"];
+		const expected = [1, "Something todo"];
+
+		const current = validateEditTitleParams(params);
+
+		expect(current).toStrictEqual(expected);
+	});
+
+	it("should throw an error if more than 2 parameter is provided", () => {
+		const params = ["1", "Something todo", "something", "more"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"You must provide an ID and a new title as parameters"
+			);
+		});
+	});
+
+	it("should throw an error if less than 2 parameter is provided", () => {
+		const params = ["1"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"You must provide an ID and a new title as parameters"
+			);
+		});
+	});
+
+	it("should throw an error if id is not a number", () => {
+		const params = ["notNumber", "Something todo"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The ID must be a numeric value greater than 0"
+			);
+		});
+	});
+
+	it("should throw an error if id is less or equal 0", () => {
+		const params = ["0", "Something todo"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The ID must be a numeric value greater than 0"
+			);
+		});
+	});
+
+	it("should throw an error if newTitle is not a string", () => {
+		const params = ["1", "12"];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The new title must be a string and has to be at least 1 character long"
+			);
+		});
+	});
+
+	it("should throw an error if newTitle's length less than 1", () => {
+		const params = ["notNumber", ""];
+
+		expect(() => {
+			validateEditTitleParams(params).toThrow(
+				"The new title must be a string and has to be at least 1 character long"
+			);
+		});
+	});
+  it('should throw when the param is not a string', () => {
+    const params = [5];
+
+    expect(() => validateAddParams(params))
+      .toThrow('The title must be a non zero length string.');
+  })
+
+  it('should throw when the param is a zero length string', () => {
+    const params = [''];
+
+    expect(() => validateAddParams(params))
+      .toThrow('The title must be a non zero length string.');
+  })
+})

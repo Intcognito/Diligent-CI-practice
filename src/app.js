@@ -1,7 +1,7 @@
-import { list, formatList, format, add, findById, complete, findTodoByTitle } from './todo.js';
+import { list, formatList, format, add, findById, complete, findTodoByTitle, editTitle } from './todo.js';
 import { display } from './display.js';
 import { AppError } from './app-error.js';
-import { validateAddParams, validateFindByIdParams, validateId, validateFindByTitleParams } from './validate.js';
+import { validateAddParams, validateFindByIdParams, validateId, validateFindByTitleParams, validateEditTitleParams } from './validate.js';
 
 export function createApp(todoStore, args) {
 	const [, , command, ...params] = args;
@@ -50,6 +50,25 @@ export function createApp(todoStore, args) {
       const completed = complete(todoStore, validatedInput);
       display(['Todo completed:', format(completed)]);
       break;
+    case "edit-title":
+			//validating the parameters
+			const validatedEditTitleParams = validateEditTitleParams(params);
+
+			/**
+			 * saving the returned edited todo
+			 * @param {number} validatedEditTitleParams[0] - the id as an integer
+			 * @param {string} validatedEditTitleParams[1] - the new title
+			 * @returns {Object} - the edited todo
+			 */
+			const updatedTodo = editTitle(
+				todoStore,
+				validatedEditTitleParams[0],
+				validatedEditTitleParams[1]
+			);
+
+			//displaying the edited todo
+			display(["The updated todo: ", format(updatedTodo)]);
+			break;
     default:
       throw new AppError(`Unknown command: ${command}`)
   }

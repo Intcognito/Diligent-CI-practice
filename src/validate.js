@@ -33,15 +33,34 @@ export function validateId(todoStore, id) {
 }
 
 export function validateFindByIdParams(params) {
-  if (params.length !== 1) {
-    throw new AppError('You must provide exactly one ID.');
-  }
+	if (params.length !== 1) {
+		throw new AppError("You must provide exactly one ID.");
+	}
 
-  const [id] = params;
-  if (isNaN(id) || id <= 0) {
-    throw new AppError('The ID must be a numeric value greater than 0.');
-  }
-  return parseInt(params, 10);
+	const [id] = params;
+	if (isNaN(id) || id <= 0) {
+		throw new AppError("The ID must be a numeric value greater than 0.");
+	}
+	return parseInt(params, 10);
+}
+
+export function validateEditTitleParams(params) {
+	if (params.length !== 2) {
+		throw new AppError("You must provide an ID and a new title as parameters");
+	}
+
+	const [id, newTitle] = params;
+
+	if (isNaN(id) || id <= 0) {
+		throw new AppError("The ID must be a numeric value greater than 0");
+	}
+	if (!isNaN(newTitle) || newTitle.length < 1) {
+		throw new AppError(
+			"The new title must be a string and has to be at least 1 character long"
+		);
+	}
+
+	return [parseInt(id), newTitle];
 }
 
 export function validateFindByTitleParams(params) {
