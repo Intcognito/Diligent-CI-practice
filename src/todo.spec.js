@@ -184,8 +184,8 @@ describe('complete', () => {
 
     expect(actual).toStrictEqual(expected);
   });
-  
-  describe("find-by-title", () => {
+});
+describe("find-by-title", () => {
 	it("should return the todos which titles are matching or contains the given parameter", () => {
 		const mockStore = createMockStore([
 			{ id: 1, title: "Todo 1", done: true },
@@ -202,5 +202,5 @@ describe('complete', () => {
 		];
 		expect(current).toStrictEqual(expected);
 	});
-  });
+
 });
