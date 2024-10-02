@@ -1,5 +1,5 @@
-import { jest } from "@jest/globals";
-import { add, findById, format, formatList, list, editTitle } from "./todo.js";
+import { jest } from '@jest/globals';
+import { add, findById, format, formatList, list, complete, findTodoByTitle, editTitle } from './todo.js';
 
 function createMockStore(data) {
 	return {
@@ -35,11 +35,10 @@ describe("formatList", () => {
 			{ title: "todo title 2", id: 2, done: false },
 		];
 		const expected = ["1 - [x] todo title", "2 - [ ] todo title 2"];
-
 		const current = formatList(todos);
 
 		expect(current).toStrictEqual(expected);
-	}),
+	});
 		it("should return an empty list, if an empty list is given", () => {
 			const todos = [];
 			const expected = [];
@@ -171,4 +170,37 @@ describe("edit-title", () => {
 		editTitle(mockStore, id, newTitle);
 		expect(mockStore.set.mock.lastCall).toStrictEqual([expected]);
 	});
+  
+describe('complete', () => {
+  it('should complete the todo if ID is found', () => {
+    const mockTodos = createMockStore([
+      { id: 1, title: "First task", done: false },
+      { id: 2, title: "Second task", done: false }
+    ]);
+    const id = 2;
+
+    const expected = {id:2, title:"Second task", done: true};
+    const actual = complete(mockTodos, id);
+
+    expect(actual).toStrictEqual(expected);
+  });
+  
+  describe("find-by-title", () => {
+	it("should return the todos which titles are matching or contains the given parameter", () => {
+		const mockStore = createMockStore([
+			{ id: 1, title: "Todo 1", done: true },
+			{ id: 2, title: "Todo 2", done: false },
+			{ id: 3, title: "Todo 2 something", done: false },
+			{ id: 4, title: "something", done: false },
+		]);
+
+		const current = findTodoByTitle(mockStore, "todo");
+		const expected = [
+			{ id: 1, title: "Todo 1", done: true },
+			{ id: 2, title: "Todo 2", done: false },
+			{ id: 3, title: "Todo 2 something", done: false },
+		];
+		expect(current).toStrictEqual(expected);
+	});
+  });
 });
