@@ -273,7 +273,7 @@ describe("validateEditTitleParams", () => {
 				"The new title must be a string and has to be at least 1 character long"
 			);
 		});
-    
+	});
   it('should throw when the param is not a string', () => {
     const params = [5];
 
